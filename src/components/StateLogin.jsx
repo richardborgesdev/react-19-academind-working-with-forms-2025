@@ -8,6 +8,11 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    setEnteredValues({
+      email: "",
+      password: "",
+    });
   }
 
   function handleInputChange(identifier, value) {
