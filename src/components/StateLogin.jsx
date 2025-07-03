@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
+import * as validationService from "../util/validation";
 
 export default function Login() {
   const [enteredValues, setEnteredValues] = useState({
@@ -12,9 +13,13 @@ export default function Login() {
     password: false,
   });
 
-  const isEmailValid = !enteredValues.email.includes("@") && didEdit.email;
+  const isEmailValid =
+    didEdit.email &&
+    !validationService.isEmail(enteredValues.email) &&
+    !validationService.isNotEmpty(enteredValues.email);
   const isPasswordValid =
-    didEdit.password && enteredValues.password.trim().length > 5;
+    didEdit.password &&
+    validationService.hasMinLength(enteredValues.password, 6);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -50,7 +55,7 @@ export default function Login() {
 
       <div className="control-row">
         <Input
-          label="Ëmail"
+          label="Email"
           id="email"
           type="email"
           name="email"
@@ -61,6 +66,7 @@ export default function Login() {
         />
 
         <Input
+          label="Password"
           id="password"
           type="password"
           name="password"
